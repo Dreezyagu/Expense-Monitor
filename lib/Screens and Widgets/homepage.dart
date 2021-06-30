@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
-
+  const Homepage({required this.news, Key? key}) : super(key: key);
+  final bool news;
   @override
   _HomepageState createState() => _HomepageState();
 }
@@ -18,11 +18,12 @@ class _HomepageState extends State<Homepage> {
   TextEditingController regEmail = TextEditingController();
   TextEditingController regPass = TextEditingController();
   String month = '';
-  bool aa = true;
+  bool aa = false;
 
   @override
   void initState() {
     super.initState();
+    aa = widget.news;
     int mont = DateTime.now().month;
     switch (mont) {
       case 1:
@@ -63,6 +64,23 @@ class _HomepageState extends State<Homepage> {
         break;
       default:
     }
+    check(auth.currentUser);
+  }
+
+  check(User? user) async {
+    if (user?.uid != null) {
+      DocumentSnapshot ds = await FirebaseFirestore.instance
+          .collection(user!.uid)
+          .doc(month)
+          .get();
+      this.setState(() {
+        aa = ds.exists;
+      });
+    }
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -76,18 +94,6 @@ class _HomepageState extends State<Homepage> {
           if (user == null) {
             return Auth(auth);
           }
-          FirebaseFirestore.instance
-              .collection(user.uid)
-              .doc(month)
-              .get()
-              .then((DocumentSnapshot documentSnapshot) {
-            if (documentSnapshot.exists) {
-              return aa = true;
-            } else {
-              return aa = false;
-            }
-          });
-
           if (aa) {
             return Maindash(
               auth: auth,

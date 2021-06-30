@@ -58,10 +58,12 @@ class _MyAppState extends State<MyApp> {
               bottomAppBarColor: dark,
               bottomSheetTheme: BottomSheetThemeData(backgroundColor: dark),
             ),
-            home: Homepage(),
+            home: Homepage(
+              news: false,
+            ),
             builder: EasyLoading.init(),
             routes: {
-              'homepage': (context) => Homepage(),
+              'homepage': (context) => Homepage(news: false),
             },
           );
         }

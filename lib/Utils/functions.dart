@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthFunctions {
-  static register(
+  static Future register(
       String name, String email, String password, FirebaseAuth auth) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -30,7 +30,7 @@ class AuthFunctions {
     }
   }
 
-  static login(String email, String password, FirebaseAuth auth) async {
+  static Future login(String email, String password, FirebaseAuth auth) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);

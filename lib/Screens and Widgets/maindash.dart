@@ -80,6 +80,11 @@ class _MaindashState extends State<Maindash> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () => widget.auth.signOut(),
+                icon: Icon(Icons.door_back))
+          ],
           title: Text(
             "Home",
             style: TextStyle(color: white),

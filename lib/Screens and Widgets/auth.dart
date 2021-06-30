@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expense_monitor/Screens%20and%20Widgets/homepage.dart';
 import 'package:expense_monitor/Screens%20and%20Widgets/spaces.dart';
 import 'package:expense_monitor/Utils/constants.dart';
 import 'package:expense_monitor/Utils/functions.dart';
@@ -27,6 +29,7 @@ class _AuthState extends State<Auth> {
   bool obscure1 = false;
   bool obscure2 = false;
   bool obscure3 = false;
+  String month = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +44,23 @@ class _AuthState extends State<Auth> {
               labelStyle: TextStyle(
                 fontSize: context.width(.06),
                 fontWeight: FontWeight.w900,
-                color: white,
               ),
               unselectedLabelStyle: TextStyle(
                 fontSize: context.width(.055),
                 fontWeight: FontWeight.w400,
-                color: white,
               ),
               tabs: [
                 Text(
                   'Log in',
+                  style: TextStyle(
+                    color: white,
+                  ),
                 ),
                 Text(
                   'Sign up',
+                  style: TextStyle(
+                    color: white,
+                  ),
                 ),
               ]),
         ),
@@ -151,7 +158,10 @@ class _AuthState extends State<Auth> {
                       indicator: CircularProgressIndicator(),
                       dismissOnTap: false);
                   AuthFunctions.register(name.text.trim(), remail.text.trim(),
-                      rpass.text.trim(), widget.auth);
+                          rpass.text.trim(), widget.auth)
+                      .then((value) =>
+                          Navigator.pushReplacementNamed(context, 'homepage'));
+                  // setState(() {});
                   EasyLoading.dismiss();
                 },
                 child: Container(
@@ -213,8 +223,9 @@ class _AuthState extends State<Auth> {
                       indicator: CircularProgressIndicator(),
                       dismissOnTap: false);
                   AuthFunctions.login(
-                      lemail.text.trim(), lpass.text.trim(), widget.auth);
-
+                          lemail.text.trim(), lpass.text.trim(), widget.auth)
+                      .then((value) =>
+                          Navigator.pushReplacementNamed(context, 'homepage'));
                   EasyLoading.dismiss();
                 },
                 child: Container(
