@@ -4,10 +4,11 @@ import 'package:expense_monitor/Screens%20and%20Widgets/maindash.dart';
 import 'package:expense_monitor/Screens%20and%20Widgets/predashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({required this.news, Key? key}) : super(key: key);
-  final bool news;
+  final int news;
   @override
   _HomepageState createState() => _HomepageState();
 }
@@ -18,12 +19,12 @@ class _HomepageState extends State<Homepage> {
   TextEditingController regEmail = TextEditingController();
   TextEditingController regPass = TextEditingController();
   String month = '';
-  bool aa = false;
+  int state = 0;
 
   @override
   void initState() {
     super.initState();
-    aa = widget.news;
+    state = widget.news;
     int mont = DateTime.now().month;
     switch (mont) {
       case 1:
@@ -74,10 +75,12 @@ class _HomepageState extends State<Homepage> {
           .doc(month)
           .get();
       this.setState(() {
-        aa = ds.exists;
+        ds.exists ? state = 2 : state = 1;
+        // aa = ds.exists;
       });
     }
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -94,16 +97,18 @@ class _HomepageState extends State<Homepage> {
           if (user == null) {
             return Auth(auth);
           }
-          if (aa) {
+          if (state == 2) {
             return Maindash(
               auth: auth,
               user: auth.currentUser,
             );
-          } else {
+          } else if (state == 1) {
             return Dashboard(
               auth: auth,
               user: auth.currentUser,
             );
+          } else {
+            return Center(child: CircularProgressIndicator());
           }
         }
         return Column(
