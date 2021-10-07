@@ -5,9 +5,9 @@ class AuthFunctions {
   static Future register(
       String name, String email, String password, FirebaseAuth auth) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+     final UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      User? user = auth.currentUser;
+     final User? user = auth.currentUser;
       user?.updateDisplayName(name);
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
@@ -32,7 +32,7 @@ class AuthFunctions {
 
   static Future login(String email, String password, FirebaseAuth auth) async {
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+     final UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
 
       Fluttertoast.showToast(msg: "SIgn up successful");

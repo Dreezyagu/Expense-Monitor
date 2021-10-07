@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expense_monitor/Screens%20and%20Widgets/homepage.dart';
 import 'package:expense_monitor/Screens%20and%20Widgets/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
 
-    int mont = DateTime.now().month;
+   final int mont = DateTime.now().month;
     switch (mont) {
       case 1:
         month = 'January';
@@ -116,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 contentPadding: EdgeInsets.all(context.width(.04)),
                 hintText: 'E.g, 100,000'),
           ),
@@ -125,10 +124,10 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () async {
                 FocusScope.of(context).requestFocus(FocusNode());
                 EasyLoading.show(
-                    indicator: CircularProgressIndicator(),
+                    indicator: const CircularProgressIndicator(),
                     dismissOnTap: false);
                 amounts
-                    .doc("$month")
+                    .doc(month)
                     .set({
                       "amount": amount.text,
                       "expenses": [],

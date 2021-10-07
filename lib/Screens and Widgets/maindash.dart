@@ -28,7 +28,7 @@ class _MaindashState extends State<Maindash> {
   @override
   void initState() {
     super.initState();
-    int mont = DateTime.now().month;
+    final int mont = DateTime.now().month;
     switch (mont) {
       case 1:
         month = 'January';
@@ -83,7 +83,7 @@ class _MaindashState extends State<Maindash> {
           actions: [
             IconButton(
                 onPressed: () => widget.auth.signOut(),
-                icon: Icon(Icons.door_back))
+                icon: const Icon(Icons.door_back))
           ],
           title: Text(
             "Home",
@@ -93,7 +93,7 @@ class _MaindashState extends State<Maindash> {
         onPressed: () {
           dropdown();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: ListView(
         // physics: BouncingScrollPhysics(),
@@ -132,7 +132,7 @@ class _MaindashState extends State<Maindash> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(context.width(.03)),
                       hintStyle: TextStyle(fontSize: context.width(.03)),
                       hintText: 'Amount'),
@@ -143,7 +143,7 @@ class _MaindashState extends State<Maindash> {
                   style: TextStyle(fontSize: context.width(.035)),
                   textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(context.width(.03)),
                       hintStyle: TextStyle(fontSize: context.width(.03)),
                       hintText: 'Description'),
@@ -156,7 +156,7 @@ class _MaindashState extends State<Maindash> {
                       if (amount.text.isEmpty) return;
                       FocusScope.of(context).requestFocus(FocusNode());
                       EasyLoading.show(
-                          indicator: CircularProgressIndicator(),
+                          indicator: const CircularProgressIndicator(),
                           dismissOnTap: false);
                       expenses
                           .doc(month)
@@ -212,7 +212,7 @@ class _ExpensesState extends State<Expenses> {
   @override
   void initState() {
     super.initState();
-    int mont = DateTime.now().month;
+    final int mont = DateTime.now().month;
     switch (mont) {
       case 1:
         month = 'January';
@@ -256,8 +256,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController amountc = TextEditingController();
-    TextEditingController descriptionc = TextEditingController();
+    final TextEditingController amountc = TextEditingController();
+    final TextEditingController descriptionc = TextEditingController();
     void dropdown(amount, description) {
       amountc.text = amount.toString();
       descriptionc.text = description.toString();
@@ -282,7 +282,7 @@ class _ExpensesState extends State<Expenses> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         contentPadding: EdgeInsets.all(context.width(.03)),
                         hintStyle: TextStyle(fontSize: context.width(.03)),
                         hintText: 'Amount'),
@@ -293,7 +293,7 @@ class _ExpensesState extends State<Expenses> {
                     style: TextStyle(fontSize: context.width(.035)),
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         contentPadding: EdgeInsets.all(context.width(.03)),
                         hintStyle: TextStyle(fontSize: context.width(.03)),
                         hintText: 'Description'),
@@ -320,7 +320,7 @@ class _ExpensesState extends State<Expenses> {
                             if (amount.text.isEmpty) return;
                             FocusScope.of(context).requestFocus(FocusNode());
                             EasyLoading.show(
-                                indicator: CircularProgressIndicator(),
+                                indicator: const CircularProgressIndicator(),
                                 dismissOnTap: false);
                             widget.expenses
                                 .doc(month)
@@ -367,7 +367,7 @@ class _ExpensesState extends State<Expenses> {
           builder: (BuildContext context,
               AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return const Text('Something went wrong');
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -377,11 +377,11 @@ class _ExpensesState extends State<Expenses> {
             // Expensemodel.fromJson(snapshot.data!.data()?["expenses"]);
             // print(a);
 
-            List expensemode = snapshot.data!
+            final List expensemode = snapshot.data!
                 .data()?["expenses"]
                 .map((e) => Expensemodel.fromJson(e))
                 .toList();
-            List expensemodel = expensemode.reversed.toList();
+            final List expensemodel = expensemode.reversed.toList();
 
             return Padding(
               padding: EdgeInsets.all(context.width(.05)),
@@ -404,12 +404,12 @@ class _ExpensesState extends State<Expenses> {
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
-                        physics: ScrollPhysics(),
+                        physics: const ScrollPhysics(),
                         itemCount: expensemodel.length,
                         itemBuilder: (context, index) {
-                          var d = DateFormat.yMMMMd();
+                          final d = DateFormat.yMMMMd();
 
-                          String date = d
+                          final String date = d
                               .format(DateTime.parse(expensemodel[index].date));
 
                           return InkWell(
@@ -423,7 +423,7 @@ class _ExpensesState extends State<Expenses> {
                                       context.width(.02))),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: Color(0xff1F242A),
+                                    color: const Color(0xff1F242A),
                                     borderRadius: BorderRadius.circular(
                                         context.width(.02))),
                                 height: context.width(.4),
@@ -436,7 +436,7 @@ class _ExpensesState extends State<Expenses> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      "$date",
+                                      date,
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.w300,
@@ -453,8 +453,7 @@ class _ExpensesState extends State<Expenses> {
                                     Text(
                                       "₦${expensemodel[index].value}"
                                           .replaceAllMapped(
-                                        new RegExp(
-                                            r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                                         (Match m) => '${m[1]},',
                                       ),
                                       style: TextStyle(
@@ -499,13 +498,13 @@ class Indicator extends StatelessWidget {
           builder: (BuildContext context,
               AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return const Text('Something went wrong');
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container();
             }
-            List expensemodel = snapshot.data!
+            final List expensemodel = snapshot.data!
                 .data()?["expenses"]
                 .map((e) => Expensemodel.fromJson(e))
                 .toList();
@@ -513,8 +512,8 @@ class Indicator extends StatelessWidget {
             expensemodel.forEach((element) {
               total += int.parse((element.value).toString());
             });
-            int amount = int.parse(snapshot.data?.data()?["amount"]);
-            int remain = amount - total;
+            final int amount = int.parse(snapshot.data?.data()?["amount"]);
+            final int remain = amount - total;
 
             return Padding(
               padding: EdgeInsets.all(context.width(.05)),
@@ -535,7 +534,7 @@ class Indicator extends StatelessWidget {
                 Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: context.width(.6),
                       height: context.width(.6),
                       child: CircularProgressIndicator(
@@ -581,20 +580,20 @@ class Balance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: context.height(.16),
       child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           stream: _usersStream,
           builder: (BuildContext context,
               AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return const Text('Something went wrong');
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container();
             }
-            List expensemodel = snapshot.data!
+            final List expensemodel = snapshot.data!
                 .data()?["expenses"]
                 .map((e) => Expensemodel.fromJson(e))
                 .toList();
@@ -602,10 +601,10 @@ class Balance extends StatelessWidget {
             expensemodel.forEach((element) {
               total += int.parse((element.value).toString());
             });
-            int amount = int.parse(snapshot.data?.data()?["amount"]);
+            final int amount = int.parse(snapshot.data?.data()?["amount"]);
 
             return Card(
-              color: Color(0xff1F242A),
+              color: const Color(0xff1F242A),
               child: Padding(
                 padding: EdgeInsets.all(context.width(.02)),
                 child: Column(children: [
@@ -624,7 +623,7 @@ class Balance extends StatelessWidget {
                   Hspace(context.height(.02)),
                   Text(
                     "₦${amount - total}".replaceAllMapped(
-                        new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                         (Match m) => '${m[1]},'),
                     style: TextStyle(
                       fontSize: context.width(.1),

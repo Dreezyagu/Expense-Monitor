@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
@@ -37,8 +37,8 @@ class _MyAppState extends State<MyApp> {
               fontFamily: 'Roboto',
               brightness: Brightness.dark,
               secondaryHeaderColor: white,
-              primaryColor: Color(0xff7AF7FD),
-              primarySwatch: MaterialColor(0xff7AF7FD, {
+              primaryColor: const Color(0xff7AF7FD),
+              primarySwatch: const MaterialColor(0xff7AF7FD, {
                 100: Color(0xff7AF7FD),
                 200: Color(0xff7AF7FD),
                 300: Color(0xff7AF7FD),
@@ -56,18 +56,19 @@ class _MyAppState extends State<MyApp> {
               cardColor: dark,
               dividerColor: lightGrey.withOpacity(.2),
               bottomAppBarColor: dark,
-              bottomSheetTheme: BottomSheetThemeData(backgroundColor: dark),
+              bottomSheetTheme:
+                  const BottomSheetThemeData(backgroundColor: dark),
             ),
-            home: Homepage(
+            home: const Homepage(
               news: 0,
             ),
             builder: EasyLoading.init(),
             routes: {
-              'homepage': (context) => Homepage(news: 0),
+              'homepage': (context) => const Homepage(news: 0),
             },
           );
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }

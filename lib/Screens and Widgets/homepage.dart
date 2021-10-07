@@ -4,7 +4,6 @@ import 'package:expense_monitor/Screens%20and%20Widgets/maindash.dart';
 import 'package:expense_monitor/Screens%20and%20Widgets/predashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({required this.news, Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     state = widget.news;
-    int mont = DateTime.now().month;
+    final int mont = DateTime.now().month;
     switch (mont) {
       case 1:
         month = 'January';
@@ -68,13 +67,13 @@ class _HomepageState extends State<Homepage> {
     check(auth.currentUser);
   }
 
-  check(User? user) async {
+  Future check(User? user) async {
     if (user?.uid != null) {
-      DocumentSnapshot ds = await FirebaseFirestore.instance
+      final DocumentSnapshot ds = await FirebaseFirestore.instance
           .collection(user!.uid)
           .doc(month)
           .get();
-      this.setState(() {
+      setState(() {
         ds.exists ? state = 2 : state = 1;
         // aa = ds.exists;
       });
@@ -93,7 +92,7 @@ class _HomepageState extends State<Homepage> {
       builder: (context, snapshot) {
         if (snapshot.hasError) return Container();
         if (snapshot.connectionState == ConnectionState.active) {
-          User? user = snapshot.data;
+          final User? user = snapshot.data;
           if (user == null) {
             return Auth(auth);
           }
@@ -108,11 +107,11 @@ class _HomepageState extends State<Homepage> {
               user: auth.currentUser,
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         }
         return Column(
-          children: [
+          children: const [
             Center(child: CircularProgressIndicator()),
           ],
         );

@@ -1,0 +1,8 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    implicit-cast: true
+analyzer:
+  # errors:
+  #   argument_type_not_assignable: ignore

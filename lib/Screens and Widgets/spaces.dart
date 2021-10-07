@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Hspace extends StatelessWidget {
   final double height;
-  Hspace(this.height);
+  const Hspace(this.height);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class Hspace extends StatelessWidget {
 
 class Wspace extends StatelessWidget {
   final double width;
-  Wspace(this.width);
+  const Wspace(this.width);
 
   @override
   Widget build(BuildContext context) {
