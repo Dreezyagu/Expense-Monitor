@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_monitor/Utils/constants.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
 class Maindash extends StatefulWidget {
@@ -96,9 +95,8 @@ class _MaindashState extends State<Maindash> {
         child: const Icon(Icons.add),
       ),
       body: ListView(
-        // physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
         children: [
-          Hspace(context.height(.02)),
           Balance(usersStream: _usersStream),
           Indicator(usersStream: _usersStream),
           Expenses(
@@ -155,29 +153,21 @@ class _MaindashState extends State<Maindash> {
                     onPressed: () {
                       if (amount.text.isEmpty) return;
                       FocusScope.of(context).requestFocus(FocusNode());
-                      EasyLoading.show(
-                          indicator: const CircularProgressIndicator(),
-                          dismissOnTap: false);
-                      expenses
-                          .doc(month)
-                          .update({
-                            "expenses": FieldValue.arrayUnion([
-                              Expensemodel(
-                                      id: DateTime.now().toString(),
-                                      value: int.parse(amount.text),
-                                      description: description.text,
-                                      date: DateTime.now().toString())
-                                  .toJson(),
-                            ])
-                          })
-                          .catchError(
-                              (error) => print("Failed to add amount: $error"))
-                          .then((value) {
-                            EasyLoading.dismiss();
-                            amount.clear();
-                            description.clear();
-                            Navigator.pop(context);
-                          });
+
+                      expenses.doc(month).update({
+                        "expenses": FieldValue.arrayUnion([
+                          Expensemodel(
+                                  id: DateTime.now().toString(),
+                                  value: int.parse(amount.text),
+                                  description: description.text,
+                                  date: DateTime.now().toString())
+                              .toJson(),
+                        ])
+                      }).catchError(
+                          (error) => print("Failed to add amount: $error"));
+                      amount.clear();
+                      description.clear();
+                      Navigator.pop(context);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -319,29 +309,21 @@ class _ExpensesState extends State<Expenses> {
                           onPressed: () {
                             if (amount.text.isEmpty) return;
                             FocusScope.of(context).requestFocus(FocusNode());
-                            EasyLoading.show(
-                                indicator: const CircularProgressIndicator(),
-                                dismissOnTap: false);
-                            widget.expenses
-                                .doc(month)
-                                .update({
-                                  "expenses": FieldValue.arrayUnion([
-                                    Expensemodel(
-                                            id: DateTime.now().toString(),
-                                            value: int.parse(amount.text),
-                                            description: description.text,
-                                            date: DateTime.now().toString())
-                                        .toJson(),
-                                  ])
-                                })
-                                .catchError((error) =>
-                                    print("Failed to add amount: $error"))
-                                .then((value) {
-                                  EasyLoading.dismiss();
-                                  amount.clear();
-                                  description.clear();
-                                  Navigator.pop(context);
-                                });
+
+                            widget.expenses.doc(month).update({
+                              "expenses": FieldValue.arrayUnion([
+                                Expensemodel(
+                                        id: DateTime.now().toString(),
+                                        value: int.parse(amount.text),
+                                        description: description.text,
+                                        date: DateTime.now().toString())
+                                    .toJson(),
+                              ])
+                            }).catchError((error) =>
+                                print("Failed to add amount: $error"));
+                            amount.clear();
+                            description.clear();
+                            Navigator.pop(context);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -518,8 +500,6 @@ class Indicator extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.all(context.width(.05)),
               child: Column(children: [
-                Hspace(context.height(.01)),
-
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
