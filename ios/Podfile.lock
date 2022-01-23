@@ -445,7 +445,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 7f6576eaca9f821e864c3e917d68aa99f4e6b613
   FirebaseFunctions: 57fedef9b8808b83be40e176bcb28aa2aa78cf92
   FirebaseInstallations: 2563cb18a723ef9c6ef18318a49519b75dce613c
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   GoogleAppMeasurement: c6bbc9753d046b5456dd4f940057fbad2c28419e
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
@@ -460,4 +460,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 47735fd1b8537822fc3b1ed87de9e31c2a715d3a
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

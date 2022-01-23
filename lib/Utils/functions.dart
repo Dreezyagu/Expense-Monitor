@@ -5,9 +5,9 @@ class AuthFunctions {
   static Future register(
       String name, String email, String password, FirebaseAuth auth) async {
     try {
-     final UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-     final User? user = auth.currentUser;
+      final User? user = auth.currentUser;
       user?.updateDisplayName(name);
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
@@ -32,10 +32,9 @@ class AuthFunctions {
 
   static Future login(String email, String password, FirebaseAuth auth) async {
     try {
-     final UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
 
-      Fluttertoast.showToast(msg: "SIgn up successful");
+      Fluttertoast.showToast(msg: "Sign up successful");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Fluttertoast.showToast(msg: 'No user found for that email.');

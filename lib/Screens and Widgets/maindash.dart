@@ -82,7 +82,7 @@ class _MaindashState extends State<Maindash> {
           actions: [
             IconButton(
                 onPressed: () => widget.auth.signOut(),
-                icon: const Icon(Icons.door_back))
+                icon: const Icon(Icons.door_back_door))
           ],
           title: Text(
             "Home",
